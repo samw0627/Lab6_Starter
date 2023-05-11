@@ -35,6 +35,8 @@ function getRecipesFromStorage() {
  * @param {Array<Object>} recipes An array of recipes
  */
 function addRecipesToDocument(recipes) {
+  if (!recipes) return;
+
   // A10. TODO - Get a reference to the <main> element
   const main = document.querySelector("main");
     // A11. TODO - Loop through each of the recipes in the passed in array,
@@ -83,15 +85,20 @@ function initFormHandler() {
   //            make this easier to read), and then extract the keys and corresponding
   //            values from the FormData object and insert them into recipeObject
   var recipeObject = new Object();
-  for (const key in formData.keys()){
-    recipeObject[key] = formData.get(key);
+  for (const pair of formData.entries()){
+    recipeObject[pair[0]] = pair[1];
   }
+
+ /**  for (var key of Object.keys(recipeObject)) {
+    document.write(key + " => " + recipeObject[key] + "</br>")
+}*/
   // B6. TODO - Create a new <recipe-card> element
-  console.log(recipeObject);
+  
   var recipeCard = document.createElement("recipe-card");
   // B7. TODO - Add the recipeObject data to <recipe-card> using element.data
     recipeCard.data = recipeObject;
   // B8. TODO - Append this new <recipe-card> to <main>
+  const main = document.querySelector("main");
   main.appendChild(recipeCard);
   // B9. TODO - Get the recipes array from localStorage, add this new recipe to it, and
   //            then save the recipes array back to localStorage
